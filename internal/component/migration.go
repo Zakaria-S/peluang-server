@@ -10,5 +10,6 @@ func Migrate(db *gorm.DB) {
 	db.AutoMigrate(
 		&domain.User{},
 		&domain.UserOtp{},
+		&domain.PriceRange{},
 	)
 }

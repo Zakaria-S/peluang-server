@@ -18,3 +18,7 @@ var (
 	ErrEmptyToken     = errors.New("empty token")
 	ErrNoBerearToken  = errors.New("token no Bearer")
 )
+
+var (
+	ErrMinMax = errors.New("this price range already exists")
+)

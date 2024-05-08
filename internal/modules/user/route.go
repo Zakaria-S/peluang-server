@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"peluang-server/domain"
 	"peluang-server/dto"
-	"peluang-server/internal/middleware"
+
+	//"peluang-server/internal/middleware"
 	"strings"
 	"time"
 
@@ -28,14 +29,14 @@ func NewRoute(app *fiber.App, userService domain.UserService) {
 		api.Post("/auth/login", route.UserLogin)
 		api.Post("/auth/otp", route.ValidateOTP)
 	}
+	/*
+		protectedApi := app.Group("/api")
+		protectedApi.Use(middleware.Authenticate())
+		{
+			api.Get("/users", route.GetUser)
 
-	protectedApi := app.Group("/api")
-	protectedApi.Use(middleware.Authenticate())
-	{
-		api.Get("/users", route.GetUser)
-
-	}
-
+		}
+	*/
 	limitedApi := app.Group("/api")
 	limitedApi.Use(limiter.New(limiter.Config{
 		Max:        1,

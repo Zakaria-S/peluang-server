@@ -5,6 +5,7 @@ import (
 	"peluang-server/internal/component"
 	"peluang-server/internal/config"
 	"peluang-server/internal/modules/otp"
+	"peluang-server/internal/modules/pricerange"
 	"peluang-server/internal/modules/user"
 
 	"github.com/gofiber/fiber/v2"
@@ -22,8 +23,10 @@ func main() {
 
 	userRepository := user.NewRepository(db)
 	userOtpRepository := otp.NewRepository(db)
+	priceRangeRepository := pricerange.NewRepository(db)
 
 	userService := user.NewService(userRepository, userOtpRepository)
+	priceRangeService := pricerange.NewService(priceRangeRepository)
 
 	app := fiber.New()
 	app.Use(cors.New())
@@ -31,6 +34,7 @@ func main() {
 	app.Use(recover.New())
 
 	user.NewRoute(app, userService)
+	pricerange.NewRoute(app, priceRangeService)
 
 	log.Fatal(app.Listen(":" + conf.Srv.Port))
 }
